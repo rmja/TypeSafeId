@@ -95,6 +95,14 @@ public readonly struct TypeId<TEntity>
     }
 
     /// <summary>
+    /// Returns a new instance of <see cref="TypeId{TResult}"/> that represents the same underlying value as the current
+    /// instance, but with a different type parameter.
+    /// </summary>
+    /// <typeparam name="TResult">The type to cast the identifier to. Must be compatible with the underlying value type.</typeparam>
+    /// <returns>A <see cref="TypeId{TResult}"/> instance containing the same value as the current identifier.</returns>
+    public TypeId<TResult> Cast<TResult>() => new(_value);
+
+    /// <summary>
     /// Copies the string representation to a character span.
     /// </summary>
     public int CopyTo(Span<char> buffer) => _value.CopyTo(buffer);

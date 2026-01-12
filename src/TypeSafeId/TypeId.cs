@@ -82,6 +82,16 @@ public readonly struct TypeId
         new(prefix, _uuidGenerator.CreateVersion7((timestamp ?? DateTimeOffset.UtcNow)));
 
     /// <summary>
+    /// Casts this instance to a TypeId of the specified value type.
+    /// </summary>
+    /// <remarks>Use this method to reinterpret the underlying value of the current TypeId as a TypeId of a
+    /// different value type. Ensure that the cast is valid for your use case, as no runtime type checking is
+    /// performed.</remarks>
+    /// <typeparam name="TResult">The type to cast the identifier to. Must be compatible with the underlying value type.</typeparam>
+    /// <returns>A TypeId instance of type TResult representing the same underlying value as this instance.</returns>
+    public TypeId<TResult> Cast<TResult>() => (TypeId<TResult>)this;
+
+    /// <summary>
     /// Copies the string representation of this TypeId to the specified character span.
     /// </summary>
     /// <param name="buffer">The destination buffer. Must be at least <see cref="Length"/> characters.</param>
