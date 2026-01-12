@@ -10,5 +10,8 @@ public class TypeIdToStringConverter<TEntity>()
     : ValueConverter<TypeId<TEntity>, string>(
         convertToProviderExpression: x => x.ToString(),
         convertFromProviderExpression: x => TypeId<TEntity>.Parse(x),
-        new RelationalConverterMappingHints(size: TypeId.MaxLength)
+        new RelationalConverterMappingHints(
+            size: TypeId.MaxLength,
+            dbType: System.Data.DbType.AnsiString
+        )
     );

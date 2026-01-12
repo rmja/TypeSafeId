@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace TypeSafeId.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -9,5 +10,5 @@ public class TypeIdToStringConverter()
     : ValueConverter<TypeId, string>(
         convertToProviderExpression: x => x.ToString(),
         convertFromProviderExpression: x => TypeId.Parse(x),
-        new RelationalConverterMappingHints(size: TypeId.MaxLength)
+        new RelationalConverterMappingHints(size: TypeId.MaxLength, dbType: DbType.AnsiString)
     );
