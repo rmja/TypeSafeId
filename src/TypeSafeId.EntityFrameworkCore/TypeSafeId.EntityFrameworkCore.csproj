@@ -6,7 +6,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Rasmus Melchior Jacobsen</Authors>
     <Description>Entity Framework Core integration for TypeSafeId, providing value converters to store TypeId values as strings or bytes in the database.</Description>
-    <PackageTags>TypeId;Type Safe Id;EntityFrameworkCore;EF Core;Value Converter;Database</PackageTags>
+    <PackageTags>TypeId;GenericTypeId;StripeId;AOT;UUID;GUID;UUIDv7</PackageTags>
     <PackageProjectUrl>https://github.com/rmja/TypeSafeId</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>

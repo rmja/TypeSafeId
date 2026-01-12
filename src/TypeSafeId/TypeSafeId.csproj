@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Rasmus Melchior Jacobsen</Authors>
     <Description>A modern, lightweight, AOT-compatible type-safe implementation of TypeId. TypeIds are globally unique, K-sortable identifiers that combine a human-readable prefix with a UUIDv7 encoded in Crockford Base32.</Description>
-    <PackageTags>TypeId;Type Safe Id;UUID;GUID;Identifier;Distributed;UUIDv7;K-Sortable</PackageTags>
+    <PackageTags>TypeId;GenericTypeId;StripeId;AOT;UUID;GUID;UUIDv7</PackageTags>
     <PackageProjectUrl>https://github.com/rmja/TypeSafeId</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>

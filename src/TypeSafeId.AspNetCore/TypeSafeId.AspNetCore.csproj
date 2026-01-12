@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Rasmus Melchior Jacobsen</Authors>
     <Description>ASP.NET Core integration for TypeSafeId, providing route constraints and model binding support for TypeId values in minimal APIs and controllers.</Description>
-    <PackageTags>TypeId;Type Safe Id;AspNetCore;Minimal API;Route Constraint;Model Binding</PackageTags>
+    <PackageTags>TypeId;GenericTypeId;StripeId;AOT;UUID;GUID;UUIDv7</PackageTags>
     <PackageProjectUrl>https://github.com/rmja/TypeSafeId</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
