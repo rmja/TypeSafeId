@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -7,17 +8,14 @@ namespace TypeSafeId.JsonConverters;
 /// <summary>
 /// JSON converter for TypeId values.
 /// </summary>
-[RequiresDynamicCode(
-    "TypeIdJsonConverter cannot be statically analyzed and requires runtime code generation. "
-        + "Applications should use the generic TypeIdJsonConverter<TEntity> instead."
-)]
 public class TypeIdJsonConverter : JsonConverterFactory
 {
     /// <inheritdoc/>
     public override bool CanConvert(Type typeToConvert) =>
         typeToConvert == typeof(TypeId)
         || (
-            typeToConvert.IsGenericType
+            RuntimeFeature.IsDynamicCodeSupported
+            && typeToConvert.IsGenericType
             && typeToConvert.GetGenericTypeDefinition() == typeof(TypeId<>)
         );
 
@@ -30,6 +28,11 @@ public class TypeIdJsonConverter : JsonConverterFactory
         if (typeToConvert == typeof(TypeId))
         {
             return new InternalTypeIdJsonConverter();
+        }
+
+        if (!RuntimeFeature.IsDynamicCodeSupported)
+        {
+            return null;
         }
 
         var genericArgument = typeToConvert.GetGenericArguments()[0];
