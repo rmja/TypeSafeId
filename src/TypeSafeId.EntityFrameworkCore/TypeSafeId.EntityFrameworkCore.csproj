@@ -3,9 +3,10 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>Rasmus Melchior Jacobsen</Authors>
-    <Description>EntityFrameworkCore value converters for TypeId.</Description>
-    <PackageTags>TypeId;Type Safe Id;EntityFrameworkCore</PackageTags>
+    <Description>Entity Framework Core integration for TypeSafeId, providing value converters to store TypeId values as strings or bytes in the database.</Description>
+    <PackageTags>TypeId;Type Safe Id;EntityFrameworkCore;EF Core;Value Converter;Database</PackageTags>
     <PackageProjectUrl>https://github.com/rmja/TypeSafeId</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
