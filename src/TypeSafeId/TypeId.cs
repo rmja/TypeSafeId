@@ -13,7 +13,7 @@ namespace TypeSafeId;
 /// <remarks>
 /// <para>
 /// TypeIds follow the specification at https://github.com/jetify-com/typeid.
-/// Format: [prefix_]<base32-encoded-uuid> where prefix is optional and lowercase.
+/// Format: [prefix_]&lt;base32-encoded-uuid&gt; where prefix is optional and lowercase.
 /// </para>
 /// <para>
 /// Examples:

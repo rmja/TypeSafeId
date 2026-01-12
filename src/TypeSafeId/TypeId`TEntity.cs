@@ -22,6 +22,11 @@ public readonly struct TypeId<TEntity>
 {
     private readonly TypeId _value;
 
+    /// <summary>
+    /// Gets the prefix string defined by the associated attribute.
+    /// </summary>
+    /// <remarks>The value is determined at runtime by evaluating the attribute applied to the containing type
+    /// or member. This field is read-only.</remarks>
     public static readonly string Prefix = GetPrefixFromAttribute();
 
     /// <summary>
