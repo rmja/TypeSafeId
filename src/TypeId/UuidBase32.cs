@@ -19,7 +19,7 @@ internal class UuidBase32
         }
 
         Span<byte> bytes = stackalloc byte[Constants.DecodedLength];
-        var success = uuid.TryWriteBytes(bytes);
+        var success = uuid.TryWriteBytes(bytes, bigEndian: true, out _);
         Debug.Assert(success);
 
         return EncodeImpl(bytes, output, Constants.Alphabet);

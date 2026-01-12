@@ -22,7 +22,7 @@ public readonly struct TypeId<TEntity>
 {
     private readonly TypeId _value;
 
-    static readonly string Prefix = GetPrefixFromAttribute();
+    public static readonly string Prefix = GetPrefixFromAttribute();
 
     /// <summary>
     /// Gets the underlying TypeId value.

@@ -33,6 +33,7 @@ public readonly struct TypeId
         IComparable<TypeId>,
         IComparable
 {
+    private static UuidGenerator _uuidGenerator = new();
     private readonly string? _prefix;
 
     /// <summary>
@@ -78,7 +79,7 @@ public readonly struct TypeId
     /// <param name="timestamp">Optional timestamp to embed in the UUID. Defaults to current UTC time.</param>
     /// <returns>A new TypeId instance with a time-ordered UUID.</returns>
     public static TypeId Create(string prefix, DateTimeOffset? timestamp = null) =>
-        new(prefix, Guid.CreateVersion7(timestamp ?? DateTimeOffset.UtcNow));
+        new(prefix, _uuidGenerator.CreateVersion7((timestamp ?? DateTimeOffset.UtcNow)));
 
     /// <summary>
     /// Copies the string representation of this TypeId to the specified character span.
