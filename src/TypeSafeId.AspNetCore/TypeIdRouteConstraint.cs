@@ -9,6 +9,9 @@ namespace TypeSafeId.AspNetCore;
 /// </summary>
 public class TypeIdRouteConstraint : IRouteConstraint
 {
+    /// <summary>
+    /// Determines whether the URL parameter contains a valid TypeId value.
+    /// </summary>
     public bool Match(
         HttpContext? httpContext,
         IRouter? route,
