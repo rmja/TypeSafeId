@@ -13,6 +13,7 @@ namespace TypeSafeId.JsonConverters;
 )]
 public class TypeIdJsonConverter : JsonConverterFactory
 {
+    /// <inheritdoc/>
     public override bool CanConvert(Type typeToConvert) =>
         typeToConvert == typeof(TypeId)
         || (
@@ -20,6 +21,7 @@ public class TypeIdJsonConverter : JsonConverterFactory
             && typeToConvert.GetGenericTypeDefinition() == typeof(TypeId<>)
         );
 
+    /// <inheritdoc/>
     public override JsonConverter? CreateConverter(
         Type typeToConvert,
         JsonSerializerOptions options

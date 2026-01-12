@@ -53,6 +53,9 @@ public readonly struct TypeId
     public int Length =>
         Prefix.Length > 0 ? Prefix.Length + 1 + TypeIdConstants.IdLength : TypeIdConstants.IdLength;
 
+    /// <summary>
+    /// Represents the maximum allowed length for a TypeId identifier, including prefix, separator and the base32 encoded uuid.
+    /// </summary>
     public const int MaxLength = TypeIdConstants.MaxLength;
 
     /// <summary>

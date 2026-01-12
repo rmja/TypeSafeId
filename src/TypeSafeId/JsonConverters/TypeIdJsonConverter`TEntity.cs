@@ -9,6 +9,7 @@ namespace TypeSafeId.JsonConverters;
 /// </summary>
 public class TypeIdJsonConverter<TEntity> : JsonConverter<TypeId<TEntity>>
 {
+    /// <inheritdoc/>
     public override TypeId<TEntity> Read(
         ref Utf8JsonReader reader,
         Type typeToConvert,
@@ -33,17 +34,19 @@ public class TypeIdJsonConverter<TEntity> : JsonConverter<TypeId<TEntity>>
         return typeId;
     }
 
+    /// <inheritdoc/>
     public override void Write(
         Utf8JsonWriter writer,
         TypeId<TEntity> value,
         JsonSerializerOptions options
     )
     {
-        Span<char> buffer = stackalloc char[TypeId.Constants.MaxLength];
+        Span<char> buffer = stackalloc char[TypeIdConstants.MaxLength];
         var length = value.CopyTo(buffer);
         writer.WriteStringValue(buffer[..length]);
     }
 
+    /// <inheritdoc/>
     public override TypeId<TEntity> ReadAsPropertyName(
         ref Utf8JsonReader reader,
         Type typeToConvert,
@@ -68,13 +71,14 @@ public class TypeIdJsonConverter<TEntity> : JsonConverter<TypeId<TEntity>>
         return typeId;
     }
 
+    /// <inheritdoc/>
     public override void WriteAsPropertyName(
         Utf8JsonWriter writer,
         TypeId<TEntity> value,
         JsonSerializerOptions options
     )
     {
-        Span<char> buffer = stackalloc char[TypeId.Constants.MaxLength];
+        Span<char> buffer = stackalloc char[TypeIdConstants.MaxLength];
         var length = value.CopyTo(buffer);
         writer.WritePropertyName(buffer[..length]);
     }

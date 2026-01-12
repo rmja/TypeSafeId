@@ -155,21 +155,27 @@ public readonly struct TypeId<TEntity>
     /// <exception cref="ArgumentException">Thrown when the prefix doesn't match.</exception>
     public static explicit operator TypeId<TEntity>(TypeId value) => new(value);
 
+    /// <inheritdoc/>
     public static bool operator ==(TypeId<TEntity> left, TypeId<TEntity> right) =>
         left.Equals(right);
 
+    /// <inheritdoc/>
     public static bool operator !=(TypeId<TEntity> left, TypeId<TEntity> right) =>
         !left.Equals(right);
 
+    /// <inheritdoc/>
     public static bool operator <(TypeId<TEntity> left, TypeId<TEntity> right) =>
         left.CompareTo(right) < 0;
 
+    /// <inheritdoc/>
     public static bool operator <=(TypeId<TEntity> left, TypeId<TEntity> right) =>
         left.CompareTo(right) <= 0;
 
+    /// <inheritdoc/>
     public static bool operator >(TypeId<TEntity> left, TypeId<TEntity> right) =>
         left.CompareTo(right) > 0;
 
+    /// <inheritdoc/>
     public static bool operator >=(TypeId<TEntity> left, TypeId<TEntity> right) =>
         left.CompareTo(right) >= 0;
 
