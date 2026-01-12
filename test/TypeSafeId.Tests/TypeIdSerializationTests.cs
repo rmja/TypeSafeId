@@ -1,9 +1,15 @@
 using System.Text.Json;
+using TypeSafeId.JsonConverters;
 
 namespace TypeSafeId.Tests;
 
 public class TypeIdSerializationTests
 {
+    private static readonly JsonSerializerOptions _options = new()
+    {
+        Converters = { new TypeIdJsonConverter() },
+    };
+
     [TypeId("user")]
     record User(TypeId<User> Id, string Name);
 
@@ -17,8 +23,8 @@ public class TypeIdSerializationTests
         var user = new User(TypeId<User>.Create(), "John Doe");
 
         // Act
-        var json = JsonSerializer.Serialize(user);
-        var deserialized = JsonSerializer.Deserialize<User>(json);
+        var json = JsonSerializer.Serialize(user, _options);
+        var deserialized = JsonSerializer.Deserialize<User>(json, _options);
 
         // Assert
         Assert.NotNull(deserialized);
@@ -34,8 +40,8 @@ public class TypeIdSerializationTests
         var product = new Product(TypeId<Product>.Create(), "Widget", 19.99m);
 
         // Act
-        var json = JsonSerializer.Serialize(product);
-        var deserialized = JsonSerializer.Deserialize<Product>(json);
+        var json = JsonSerializer.Serialize(product, _options);
+        var deserialized = JsonSerializer.Deserialize<Product>(json, _options);
 
         // Assert
         Assert.NotNull(deserialized);
@@ -52,7 +58,7 @@ public class TypeIdSerializationTests
         var json = """{"Id":"user_01h455vb4pex5vsknk084sn02q","Name":"Jane Doe"}""";
 
         // Act
-        var user = JsonSerializer.Deserialize<User>(json);
+        var user = JsonSerializer.Deserialize<User>(json, _options);
 
         // Assert
         Assert.NotNull(user);
@@ -67,7 +73,7 @@ public class TypeIdSerializationTests
         var json = """{"Id":"wrongprefix_01h455vb4pex5vsknk084sn02q","Name":"Jane Doe"}""";
 
         // Act & Assert
-        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<User>(json));
+        Assert.Throws<JsonException>(() => JsonSerializer.Deserialize<User>(json, _options));
     }
 
     [Fact]
@@ -77,8 +83,8 @@ public class TypeIdSerializationTests
         var original = new User(TypeId<User>.Create(), "Test User");
 
         // Act
-        var json = JsonSerializer.Serialize(original);
-        var deserialized = JsonSerializer.Deserialize<User>(json);
+        var json = JsonSerializer.Serialize(original, _options);
+        var deserialized = JsonSerializer.Deserialize<User>(json, _options);
 
         // Assert
         Assert.NotNull(deserialized);
@@ -95,8 +101,11 @@ public class TypeIdSerializationTests
         var dictionary = new Dictionary<TypeId<User>, string> { { userId, "John Doe" } };
 
         // Act
-        var json = JsonSerializer.Serialize(dictionary);
-        var deserialized = JsonSerializer.Deserialize<Dictionary<TypeId<User>, string>>(json);
+        var json = JsonSerializer.Serialize(dictionary, _options);
+        var deserialized = JsonSerializer.Deserialize<Dictionary<TypeId<User>, string>>(
+            json,
+            _options
+        );
 
         // Assert
         Assert.NotNull(deserialized);

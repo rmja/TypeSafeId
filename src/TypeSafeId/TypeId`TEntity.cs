@@ -2,8 +2,6 @@
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using TypeSafeId.JsonConverters;
 
 namespace TypeSafeId;
 
@@ -11,7 +9,6 @@ namespace TypeSafeId;
 /// Represents a strongly-typed TypeId that is constrained to a specific entity type.
 /// </summary>
 /// <typeparam name="TEntity">The entity type that defines the TypeId prefix.</typeparam>
-[JsonConverter(typeof(TypeIdJsonConverter))]
 public readonly struct TypeId<TEntity>
     : IEquatable<TypeId<TEntity>>,
         ISpanParsable<TypeId<TEntity>>,

@@ -1,8 +1,6 @@
 ﻿using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using System.Text.Json.Serialization;
-using TypeSafeId.JsonConverters;
 
 namespace TypeSafeId;
 
@@ -24,7 +22,6 @@ namespace TypeSafeId;
 /// </list>
 /// </para>
 /// </remarks>
-[JsonConverter(typeof(TypeIdJsonConverter))]
 public readonly struct TypeId
     : IEquatable<TypeId>,
         ISpanParsable<TypeId>,

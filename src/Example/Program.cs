@@ -1,8 +1,12 @@
 using TypeSafeId;
 using TypeSafeId.AspNetCore;
+using TypeSafeId.JsonConverters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureHttpJsonOptions(options =>
+    options.SerializerOptions.Converters.Add(new TypeIdJsonConverter())
+);
 builder.Services.AddTypeIdRouting();
 
 var app = builder.Build();
