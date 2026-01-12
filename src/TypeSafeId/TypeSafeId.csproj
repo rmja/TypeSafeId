@@ -7,10 +7,10 @@
     <Authors>Rasmus Melchior Jacobsen</Authors>
     <Description>A modern, lightweight, AOT-compatible type-safe implementation of TypeId.</Description>
     <PackageTags>TypeId;Type Safe Id</PackageTags>
-    <PackageProjectUrl>https://github.com/rmja/TypeId</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/rmja/TypeSafeId</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/rmja/TypeId.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/rmja/TypeSafeId.git</RepositoryUrl>
     <Version>1.0.0-alpha1</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>

@@ -3,6 +3,14 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Rasmus Melchior Jacobsen</Authors>
+    <Description>EntityFrameworkCore value converters for TypeId.</Description>
+    <PackageTags>TypeId;Type Safe Id;EntityFrameworkCore</PackageTags>
+    <PackageProjectUrl>https://github.com/rmja/TypeSafeId</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/rmja/TypeSafeId.git</RepositoryUrl>
+    <Version>1.0.0-alpha1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1" />

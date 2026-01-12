@@ -15,13 +15,13 @@ A modern, type-safe implementation of [TypeIDs](https://github.com/jetify-com/ty
 
 ```bash
 # Core library
-dotnet add package TypeId
+dotnet add package TypeSafeId
 
 # ASP.NET Core extensions
-dotnet add package TypeId.AspNetCore
+dotnet add package TypeSafeId.AspNetCore
 
 # Entity Framework Core extensions
-dotnet add package TypeId.EntityFrameworkCore
+dotnet add package TypeSafeId.EntityFrameworkCore
 ```
 
 ## Quick Start
@@ -29,7 +29,7 @@ dotnet add package TypeId.EntityFrameworkCore
 ### Basic Usage
 
 ```csharp
-using TypeId;
+using TypeSafeId;
 
 // Create a TypeId with a prefix
 var userId = TypeId.Create("user");
@@ -68,7 +68,7 @@ Console.WriteLine(product.Id); // prd_01h455vb4pex5vsknk084sn02q
 Add TypeId routing support in your application:
 
 ```csharp
-using TypeId;
+using TypeSafeId;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,7 +102,7 @@ Use TypeId value converters for database storage:
 
 ```csharp
 using Microsoft.EntityFrameworkCore;
-using TypeId.EntityFrameworkCore.Storage.ValueConversion;
+using TypeSafeId.EntityFrameworkCore.Storage.ValueConversion;
 
 public class AppDbContext : DbContext
 {
@@ -135,7 +135,7 @@ TypeIds serialize naturally with System.Text.Json:
 
 ```csharp
 using System.Text.Json;
-using TypeId;
+using TypeSafeId;
 
 var user = new User(
     Id: TypeId<User>.Create(),
@@ -179,7 +179,7 @@ MIT License - See [LICENSE](LICENSE) file for details
 
 ## Repository
 
-[https://github.com/rmja/TypeId](https://github.com/rmja/TypeId)
+[https://github.com/rmja/TypeSafeId](https://github.com/rmja/TypeSafeId)
 
 ## Contributing
 
