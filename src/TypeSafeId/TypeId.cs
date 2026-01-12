@@ -373,11 +373,4 @@ public readonly struct TypeId
             InvalidChar,
         }
     }
-
-    internal static class Constants
-    {
-        public const int MaxPrefixLength = 63;
-        public const int IdLength = 26;
-        public const int MaxLength = MaxPrefixLength + 1 + IdLength;
-    }
 }
