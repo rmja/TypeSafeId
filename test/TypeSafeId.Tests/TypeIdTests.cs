@@ -247,19 +247,4 @@ public class TypeIdTests
         // Assert
         Assert.Same(prefix1, prefix2);
     }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData(null)]
-    public void TypeIdAttribute_WithNullOrEmpty_UsesTypeNameAsDefault(string? attributePrefix)
-    {
-        // This test demonstrates that both null and empty string
-        // result in the type name being used as the prefix.
-        // The actual test is already covered by other tests,
-        // but this theory shows the explicit contract.
-
-        // Note: We can't dynamically create types in the test,
-        // so this is a documentation test
-        Assert.True(true);
-    }
 }
