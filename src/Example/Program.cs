@@ -1,4 +1,5 @@
-using TypeId;
+using TypeSafeId;
+using TypeSafeId.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 

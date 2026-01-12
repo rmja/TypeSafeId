@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="src/Example/Example.csproj" />
+  <Project Path="src/TypeSafeId.AspNetCore/TypeSafeId.AspNetCore.csproj" />
+  <Project Path="src/TypeSafeId.EntityFrameworkCore/TypeSafeId.EntityFrameworkCore.csproj" />
+  <Project Path="src/TypeSafeId/TypeSafeId.csproj" />
+  <Project Path="test/TypeSafeId.Tests/TypeSafeId.Tests.csproj" />
+</Solution>

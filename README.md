@@ -1,4 +1,4 @@
-# TypeId
+# TypeSafeId
 
 A modern, type-safe implementation of [TypeIDs](https://github.com/jetify-com/typeid) for .NET. TypeIds are globally unique, K-sortable identifiers that combine a human-readable prefix with a UUIDv7 encoded in Crockford Base32.
 

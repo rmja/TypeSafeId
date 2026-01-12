@@ -1,7 +1,0 @@
-<Solution>
-  <Project Path="src/Example/Example.csproj" />
-  <Project Path="src/TypeId.AspNetCore/TypeId.AspNetCore.csproj" />
-  <Project Path="src/TypeId.EntityFrameworkCore/TypeId.EntityFrameworkCore.csproj" />
-  <Project Path="src/TypeId/TypeId.csproj" />
-  <Project Path="test/TypeId.Tests/TypeId.Tests.csproj" />
-</Solution>
