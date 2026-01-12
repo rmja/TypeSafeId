@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using TypeId.JsonConverters;
 
@@ -17,14 +19,10 @@ public readonly struct TypeId<TEntity>
         ISpanFormattable,
         IComparable<TypeId<TEntity>>,
         IComparable
-    where TEntity : ITypeIdEntity
 {
     private readonly TypeId _value;
 
-    /// <summary>
-    /// Gets the TypeId prefix for this entity type.
-    /// </summary>
-    public static string Prefix => TEntity.TypeIdPrefix;
+    static readonly string Prefix = GetPrefixFromAttribute();
 
     /// <summary>
     /// Gets the underlying TypeId value.
@@ -41,24 +39,13 @@ public readonly struct TypeId<TEntity>
     /// </summary>
     public int Length => _value.Length;
 
-    static TypeId()
-    {
-        var error = TypeId.Parser.ValidatePrefix(TEntity.TypeIdPrefix);
-        if (error != TypeId.Parser.PrefixError.None)
-        {
-            throw new InvalidOperationException(
-                $"TypeId prefix for entity type '{typeof(TEntity).Name}' is invalid, error: {error}."
-            );
-        }
-    }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="TypeId{TEntity}"/> struct from a UUID.
     /// </summary>
     /// <param name="uuid">The UUID component.</param>
     public TypeId(Guid uuid)
     {
-        _value = new TypeId(TEntity.TypeIdPrefix, uuid);
+        _value = new TypeId(Prefix, uuid);
     }
 
     /// <summary>
@@ -68,10 +55,10 @@ public readonly struct TypeId<TEntity>
     /// <exception cref="ArgumentException">Thrown when the prefix doesn't match the entity type.</exception>
     public TypeId(TypeId value)
     {
-        if (value.Prefix != TEntity.TypeIdPrefix)
+        if (value.Prefix != Prefix)
         {
             throw new ArgumentException(
-                $"TypeId prefix must be '{TEntity.TypeIdPrefix}', got '{value.Prefix}'",
+                $"TypeId prefix must be '{Prefix}', got '{value.Prefix}'",
                 nameof(value)
             );
         }
@@ -84,7 +71,26 @@ public readonly struct TypeId<TEntity>
     /// <param name="timestamp">Optional timestamp to use. Defaults to current UTC time.</param>
     /// <returns>A new TypeId instance.</returns>
     public static TypeId<TEntity> Create(DateTimeOffset? timestamp = null) =>
-        new(TypeId.Create(TEntity.TypeIdPrefix, timestamp));
+        new(TypeId.Create(Prefix, timestamp));
+
+    private static string GetPrefixFromAttribute()
+    {
+        var attribute = typeof(TEntity).GetCustomAttribute<TypeIdAttribute>();
+        var prefix = attribute?.Prefix;
+
+        // If no attribute or empty prefix, use the type name as default
+        prefix ??= JsonNamingPolicy.SnakeCaseLower.ConvertName(typeof(TEntity).Name);
+
+        var error = TypeId.Parser.ValidatePrefix(prefix);
+        if (error != TypeId.Parser.PrefixError.None)
+        {
+            throw new InvalidOperationException(
+                $"TypeId prefix for entity type '{typeof(TEntity).Name}' is invalid, error: {error}."
+            );
+        }
+
+        return prefix;
+    }
 
     /// <summary>
     /// Copies the string representation to a character span.
@@ -181,7 +187,7 @@ public readonly struct TypeId<TEntity>
             return false;
         }
 
-        if (typeId.Prefix != TEntity.TypeIdPrefix)
+        if (typeId.Prefix != Prefix)
         {
             result = default;
             return false;
@@ -228,7 +234,7 @@ public readonly struct TypeId<TEntity>
             return false;
         }
 
-        if (typeId.Prefix != TEntity.TypeIdPrefix)
+        if (typeId.Prefix != Prefix)
         {
             result = default;
             return false;

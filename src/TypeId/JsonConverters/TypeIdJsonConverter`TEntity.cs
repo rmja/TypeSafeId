@@ -7,7 +7,6 @@ namespace TypeId.JsonConverters;
 /// JSON converter for strongly-typed TypeId.
 /// </summary>
 public class TypeIdJsonConverter<TEntity> : JsonConverter<TypeId<TEntity>>
-    where TEntity : ITypeIdEntity
 {
     public override TypeId<TEntity> Read(
         ref Utf8JsonReader reader,
