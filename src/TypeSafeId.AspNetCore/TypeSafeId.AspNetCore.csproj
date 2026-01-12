@@ -13,9 +13,13 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/rmja/TypeSafeId.git</RepositoryUrl>
     <Version>1.0.0-alpha3</Version>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TypeSafeId\TypeSafeId.csproj" />
