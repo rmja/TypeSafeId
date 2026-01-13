@@ -13,8 +13,8 @@ internal class UuidBase32
     {
         if (output.Length < Constants.EncodedLength)
         {
-            throw new FormatException(
-                $"Output must be at least {Constants.EncodedLength} chars long."
+            throw new ArgumentException(
+                $"Output buffer must be at least {Constants.EncodedLength} chars long."
             );
         }
 

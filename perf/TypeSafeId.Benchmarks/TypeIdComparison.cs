@@ -13,7 +13,7 @@ public class TypeIdComparison
     [Params(0, 5, 10, 30, 63)]
     public int PrefixLength;
 
-    private string _suffix = "01h455vb4pex5vsknk084sn02q";
+    private readonly string _suffix = "01h455vb4pex5vsknk084sn02q";
 
     private TypeId<Entity>[] _typeSafeIdGenericTypeIds = [];
     private TypeId[] _typeSafeIdNotGenericTypeIds = [];
