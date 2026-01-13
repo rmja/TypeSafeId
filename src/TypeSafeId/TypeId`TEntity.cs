@@ -81,7 +81,13 @@ public readonly struct TypeId<TEntity>
     [Obsolete("For testing and benchmarking purposes only.")]
     public static void SetPrefix(string prefix)
     {
-        TypeId.Parser.ValidatePrefix(prefix);
+        if (!TypeId.Parser.IsValidPrefix(prefix))
+        {
+            throw new ArgumentException(
+                $"TypeId prefix for entity type '{typeof(TEntity).Name}' is invalid."
+            );
+        }
+
         _prefix = prefix;
     }
 
@@ -93,11 +99,10 @@ public readonly struct TypeId<TEntity>
         // If no attribute or null prefix, use the type name as default
         prefix ??= JsonNamingPolicy.SnakeCaseLower.ConvertName(typeof(TEntity).Name);
 
-        var error = TypeId.Parser.ValidatePrefix(prefix);
-        if (error != TypeId.Parser.PrefixError.None)
+        if (!TypeId.Parser.IsValidPrefix(prefix))
         {
             throw new InvalidOperationException(
-                $"TypeId prefix for entity type '{typeof(TEntity).Name}' is invalid, error: {error}."
+                $"TypeId prefix for entity type '{typeof(TEntity).Name}' is invalid."
             );
         }
 

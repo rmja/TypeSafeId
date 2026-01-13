@@ -65,7 +65,7 @@ public readonly struct TypeId
 
     internal TypeId(string prefix, Guid uuid, bool skipValidation)
     {
-        if (!skipValidation && Parser.ValidatePrefix(prefix) != Parser.PrefixError.None)
+        if (!skipValidation && !Parser.IsValidPrefix(prefix))
         {
             throw new FormatException($"Invalid TypeId prefix: '{prefix}'");
         }
@@ -248,8 +248,7 @@ public readonly struct TypeId
             }
 
             var prefix = s[..separatorIndex];
-            var error = Parser.ValidatePrefix(prefix);
-            if (error != Parser.PrefixError.None)
+            if (!Parser.IsValidPrefix(prefix))
             {
                 result = default;
                 return false;
@@ -340,35 +339,26 @@ public readonly struct TypeId
             "_abcdefghijklmnopqrstuvwxyz"
         );
 
-        public static PrefixError ValidatePrefix(ReadOnlySpan<char> prefix)
+        public static bool IsValidPrefix(ReadOnlySpan<char> prefix)
         {
             if (prefix.Length == 0)
             {
-                return PrefixError.None;
+                return true;
             }
             if (prefix.Length > TypeIdConstants.MaxPrefixLength)
             {
-                return PrefixError.TooLong;
+                return false;
             }
             if (prefix[0] == '_')
             {
-                return PrefixError.StartsWithUnderscore;
+                return false;
             }
             if (prefix[^1] == '_')
             {
-                return PrefixError.EndsWithUnderscore;
+                return false;
             }
 
-            return prefix.ContainsAnyExcept(Alphabet) ? PrefixError.InvalidChar : PrefixError.None;
-        }
-
-        public enum PrefixError
-        {
-            None,
-            TooLong,
-            StartsWithUnderscore,
-            EndsWithUnderscore,
-            InvalidChar,
+            return !prefix.ContainsAnyExcept(Alphabet);
         }
     }
 }

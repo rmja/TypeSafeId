@@ -37,37 +37,37 @@ public class TypeIdGeneration
     }
 
     [Benchmark(Baseline = true)]
-    public TypeSafeId.TypeId<Entity> TypeSafeIdGenericBenchmark()
+    public TypeSafeId.TypeId<Entity> TypeSafeIdGenericGenerate()
     {
         return TypeSafeId.TypeId<Entity>.Create();
     }
 
     [Benchmark]
-    public TypeSafeId.TypeId TypeSafeIdNotGenericBenchmark()
+    public TypeSafeId.TypeId TypeSafeIdNotGenericGenerate()
     {
         return TypeSafeId.TypeId.Create(_prefix);
     }
 
     [Benchmark]
-    public FastIDs.TypeId.TypeIdDecoded FastIdsBenchmark()
+    public FastIDs.TypeId.TypeIdDecoded FastIdsGenerate()
     {
         return FastIDs.TypeId.TypeId.New(_prefix);
     }
 
     [Benchmark]
-    public FastIDs.TypeId.TypeIdDecoded FastIdsNoCheckBenchmark()
+    public FastIDs.TypeId.TypeIdDecoded FastIdsNoCheckGenerate()
     {
         return FastIDs.TypeId.TypeId.New(_prefix, false);
     }
 
     [Benchmark]
-    public TcKs.TypeId.TypeId TcKsBenchmark()
+    public TcKs.TypeId.TypeId TcKsGenerate()
     {
         return TcKs.TypeId.TypeId.NewId(_prefix);
     }
 
     [Benchmark]
-    public global::TypeId.TypeId CbuctokBenchmark()
+    public global::TypeId.TypeId CbuctokGenerate()
     {
         return global::TypeId.TypeId.NewTypeId(_prefix);
     }
