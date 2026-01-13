@@ -28,11 +28,6 @@ public readonly struct TypeId<TEntity>
     public static string Prefix => _prefix;
 
     /// <summary>
-    /// Gets the underlying TypeId value.
-    /// </summary>
-    public TypeId Value => _value;
-
-    /// <summary>
     /// Gets the UUID component of this TypeId.
     /// </summary>
     public Guid Uuid => _value.Uuid;
@@ -121,6 +116,19 @@ public readonly struct TypeId<TEntity>
     /// Copies the string representation to a character span.
     /// </summary>
     public int CopyTo(Span<char> buffer) => _value.CopyTo(buffer);
+
+    /// <summary>
+    /// Returns the base-32 encoded suffix for the current UUID value.
+    /// </summary>
+    /// <returns>A string containing the base-32 encoded representation of the UUID suffix.</returns>
+    public string GetSuffix() => _value.GetSuffix();
+
+    /// <summary>
+    /// Gets the base-32 encoded suffix for the current UUID value into the provided buffer.
+    /// </summary>
+    /// <param name="buffer">The buffer to where the suffix is written.</param>
+    /// <returns>The number of written suffix bytes.</returns>
+    public int GetSuffix(Span<char> buffer) => _value.GetSuffix(buffer);
 
     /// <summary>
     /// Returns the string representation of this TypeId in the format [prefix_]&lt;base32-uuid&gt;.

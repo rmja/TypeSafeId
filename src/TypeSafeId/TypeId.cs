@@ -111,6 +111,24 @@ public readonly struct TypeId
     }
 
     /// <summary>
+    /// Returns the base-32 encoded suffix for the current UUID value.
+    /// </summary>
+    /// <returns>A string containing the base-32 encoded representation of the UUID suffix.</returns>
+    public string GetSuffix()
+    {
+        Span<char> chars = stackalloc char[TypeIdConstants.IdLength];
+        UuidBase32.Encode(Uuid, chars);
+        return new string(chars);
+    }
+
+    /// <summary>
+    /// Gets the base-32 encoded suffix for the current UUID value into the provided buffer.
+    /// </summary>
+    /// <param name="buffer">The buffer to where the suffix is written.</param>
+    /// <returns>The number of written suffix bytes.</returns>
+    public int GetSuffix(Span<char> buffer) => UuidBase32.Encode(Uuid, buffer);
+
+    /// <summary>
     /// Returns the string representation of this TypeId in the format [prefix_]&lt;base32-uuid&gt;.
     /// </summary>
     /// <returns>A string representation of this TypeId.</returns>

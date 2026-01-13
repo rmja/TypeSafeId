@@ -27,7 +27,7 @@ public class TypeIdValueAccessTests
         var typed = new TypeId<User>(guid);
 
         // Act
-        var untyped = typed.Value;
+        var untyped = (TypeId)typed;
 
         // Assert
         Assert.Equal(typed.Uuid, untyped.Uuid);
