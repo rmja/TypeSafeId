@@ -16,6 +16,8 @@ internal sealed class UuidGenerator
     private const int SequenceBitSize = 7;
     private const int SequenceMaxValue = (1 << SequenceBitSize) - 1;
 
+    public static UuidGenerator Instance { get; } = new();
+
     /// <summary>
     /// Creates a UUIDv7 (RFC 9562) with the specified timestamp.
     /// </summary>

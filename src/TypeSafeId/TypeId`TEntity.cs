@@ -43,7 +43,7 @@ public readonly struct TypeId<TEntity>
     /// <param name="uuid">The UUID component.</param>
     public TypeId(Guid uuid)
     {
-        _value = new TypeId(_prefix, uuid);
+        _value = new TypeId(_prefix, uuid, skipValidation: true);
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public readonly struct TypeId<TEntity>
     /// <param name="timestamp">Optional timestamp to use. Defaults to current UTC time.</param>
     /// <returns>A new TypeId instance.</returns>
     public static TypeId<TEntity> Create(DateTimeOffset? timestamp = null) =>
-        new(TypeId.Create(_prefix, timestamp));
+        new(UuidGenerator.Instance.CreateVersion7((timestamp ?? DateTimeOffset.UtcNow)));
 
     /// <summary>
     /// Sets the internal prefix used for type identifier parsing. Intended for testing and benchmarking scenarios only.
@@ -304,7 +304,8 @@ public readonly struct TypeId<TEntity>
             return false;
         }
 
-        result = new TypeId<TEntity>(typeId);
+        // Prefix is already validated, use the ctor that does not validate prefix again
+        result = new TypeId<TEntity>(typeId.Uuid);
         return true;
     }
 }

@@ -30,7 +30,6 @@ public readonly struct TypeId
         IComparable<TypeId>,
         IComparable
 {
-    private static UuidGenerator _uuidGenerator = new();
     private readonly string? _prefix;
 
     /// <summary>
@@ -62,8 +61,11 @@ public readonly struct TypeId
     /// <param name="uuid">The UUID component.</param>
     /// <exception cref="FormatException">Thrown when the prefix is invalid.</exception>
     public TypeId(string prefix, Guid uuid)
+        : this(prefix, uuid, skipValidation: false) { }
+
+    internal TypeId(string prefix, Guid uuid, bool skipValidation)
     {
-        if (Parser.ValidatePrefix(prefix) != Parser.PrefixError.None)
+        if (!skipValidation && Parser.ValidatePrefix(prefix) != Parser.PrefixError.None)
         {
             throw new FormatException($"Invalid TypeId prefix: '{prefix}'");
         }
@@ -79,7 +81,7 @@ public readonly struct TypeId
     /// <param name="timestamp">Optional timestamp to embed in the UUID. Defaults to current UTC time.</param>
     /// <returns>A new TypeId instance with a time-ordered UUID.</returns>
     public static TypeId Create(string prefix, DateTimeOffset? timestamp = null) =>
-        new(prefix, _uuidGenerator.CreateVersion7((timestamp ?? DateTimeOffset.UtcNow)));
+        new(prefix, UuidGenerator.Instance.CreateVersion7((timestamp ?? DateTimeOffset.UtcNow)));
 
     /// <summary>
     /// Casts this instance to a TypeId of the specified value type.
