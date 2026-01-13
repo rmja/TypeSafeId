@@ -187,13 +187,13 @@ public class TypeIdTests
     }
 
     [Fact]
-    public void Constructor_FromUntypedTypeId_WithMismatchedPrefix_ThrowsArgumentException()
+    public void Constructor_FromUntypedTypeId_WithMismatchedPrefix_ThrowsFormatException()
     {
         // Arrange
         var untyped = TypeId.Create("wrongprefix");
 
         // Act & Assert
-        var exception = Assert.Throws<ArgumentException>(() =>
+        var exception = Assert.Throws<FormatException>(() =>
             new TypeId<UserWithExplicitPrefix>(untyped)
         );
         Assert.Contains("TypeId prefix must be 'user'", exception.Message);
@@ -228,13 +228,13 @@ public class TypeIdTests
     }
 
     [Fact]
-    public void ExplicitConversion_FromUntypedTypeId_WithMismatchedPrefix_ThrowsArgumentException()
+    public void ExplicitConversion_FromUntypedTypeId_WithMismatchedPrefix_ThrowsFormatException()
     {
         // Arrange
         var untyped = TypeId.Create("wrongprefix");
 
         // Act & Assert
-        Assert.Throws<ArgumentException>(() => (TypeId<UserWithExplicitPrefix>)untyped);
+        Assert.Throws<FormatException>(() => (TypeId<UserWithExplicitPrefix>)untyped);
     }
 
     [Fact]
