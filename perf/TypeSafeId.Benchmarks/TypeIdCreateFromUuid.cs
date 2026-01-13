@@ -40,31 +40,31 @@ public class TypeIdCreateFromUuid
     }
 
     [Benchmark(Baseline = true)]
-    public TypeId<Entity> TypeSafeIdGenericCreate()
+    public TypeId<Entity> TypeSafeIdGenericFromUuid()
     {
         return new TypeId<Entity>(_uuidV7);
     }
 
     [Benchmark]
-    public TypeId TypeSafeIdNotGenericCreate()
+    public TypeId TypeSafeIdNotGenericFromUuid()
     {
         return new TypeId(_prefix, _uuidV7);
     }
 
     [Benchmark]
-    public FastIDs.TypeId.TypeIdDecoded FastIdsCreate()
+    public FastIDs.TypeId.TypeIdDecoded FastIdsFromUuid()
     {
         return FastIDs.TypeId.TypeId.FromUuidV7(_prefix, _uuidV7);
     }
 
     [Benchmark]
-    public TcKs.TypeId.TypeId TcKsCreate()
+    public TcKs.TypeId.TypeId TcKsFromUuid()
     {
         return new TcKs.TypeId.TypeId(_prefix, _uuidV7);
     }
 
     [Benchmark]
-    public global::TypeId.TypeId CbuctokCreate()
+    public global::TypeId.TypeId CbuctokFromUuid()
     {
         return new global::TypeId.TypeId(_prefix, _uuidV7);
     }

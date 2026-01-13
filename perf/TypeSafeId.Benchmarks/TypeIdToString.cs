@@ -53,37 +53,37 @@ public class TypeIdToString
     }
 
     [Benchmark(Baseline = true)]
-    public string TypeSafeIdGeneric()
+    public string TypeSafeIdGenericToString()
     {
         return _typeSafeIdGenericTypeId.ToString();
     }
 
     [Benchmark]
-    public string TypeSafeIdNotGeneric()
+    public string TypeSafeIdNotGenericToString()
     {
         return _typeSafeIdNotGenericTypeId.ToString();
     }
 
     [Benchmark]
-    public string FastIdsDecoded()
+    public string FastIdsDecodedToString()
     {
         return _fastIdTypeIdDecoded.ToString();
     }
 
     [Benchmark]
-    public string FastIdsEncoded()
+    public string FastIdsEncodedToString()
     {
         return _fastIdTypeId.ToString();
     }
 
     [Benchmark]
-    public string TcKs()
+    public string TcKsToString()
     {
         return _tcKsTypeId.ToString();
     }
 
     [Benchmark]
-    public string Cbuctok()
+    public string CbuctokToString()
     {
         return _cbuctokTypeId.ToString();
     }

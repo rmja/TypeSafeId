@@ -43,65 +43,65 @@ public class TypeIdParseToUuid
     }
 
     [Benchmark(Baseline = true)]
-    public Guid TypeSafeIdGenericParse()
+    public Guid TypeSafeIdGenericParseToUuid()
     {
         return TypeId<Entity>.Parse(_typeIdString).Uuid;
     }
 
     [Benchmark]
-    public Guid TypeSafeIdGenericTryParse()
+    public Guid TypeSafeIdGenericTryParseToUuid()
     {
         TypeId<Entity>.TryParse(_typeIdString, out var typeId);
         return typeId.Uuid;
     }
 
     [Benchmark]
-    public Guid TypeSafeIdNotGenericParse()
+    public Guid TypeSafeIdNotGenericParseToUuid()
     {
         return TypeId.Parse(_typeIdString).Uuid;
     }
 
     [Benchmark]
-    public Guid TypeSafeIdNotGenericTryParse()
+    public Guid TypeSafeIdNotGenericTryParseToUuid()
     {
         TypeId.TryParse(_typeIdString, out var typeId);
         return typeId.Uuid;
     }
 
     [Benchmark]
-    public Guid FastIdsParse()
+    public Guid FastIdsParseToUuid()
     {
         return FastIDs.TypeId.TypeId.Parse(_typeIdString).Decode().Id;
     }
 
     [Benchmark]
-    public Guid FastIdsTryParse()
+    public Guid FastIdsTryParseToUuid()
     {
         FastIDs.TypeId.TypeId.TryParse(_typeIdString, out var typeId);
         return typeId.Decode().Id;
     }
 
     [Benchmark]
-    public Guid TcKsParse()
+    public Guid TcKsParseToUuid()
     {
         return TcKs.TypeId.TypeId.Parse(_typeIdString).Id;
     }
 
     [Benchmark]
-    public Guid TcKsTryParse()
+    public Guid TcKsTryParseToUuid()
     {
         TcKs.TypeId.TypeId.TryParse(_typeIdString, out var typeId);
         return typeId.Id;
     }
 
     [Benchmark]
-    public Guid CbuctokParse()
+    public Guid CbuctokParseToUuid()
     {
         return global::TypeId.TypeId.Parse(_typeIdString).GetUuid();
     }
 
     [Benchmark]
-    public Guid CbuctokTryParse()
+    public Guid CbuctokTryParseToUuid()
     {
         global::TypeId.TypeId.TryParse(_typeIdString, out var typeId);
         return typeId.GetUuid();

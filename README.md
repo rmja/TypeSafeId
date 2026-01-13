@@ -11,9 +11,11 @@ Here's an example of a TypeID of type user:
 
 It's corresponding type-safe id type could be `TypeId<User>`.
 
+
 ## Features
 
 - ✨ **Type-safe** - Generic `TypeId<TEntity>` provides compile-time safety
+- ⚡ **Fast** - See [benchmarks](BENCHMARKS.md) for performance details
 - 🔤 **Human-readable** - Prefixes make identifiers self-describing (e.g., `user_01h455vb4pex5vsknk084sn02q`)
 - ⏱️ **K-sortable** - UUIDv7 based, preserves insertion order
 - 🚀 **AOT Compatible** - Ready for Native AOT compilation

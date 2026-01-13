@@ -42,28 +42,28 @@ public class TypeIdRetrieveFlow
     }
 
     [Benchmark(Baseline = true)]
-    public string TypeSafeIdGeneric()
+    public string TypeSafeIdGenericParseToString()
     {
         var typeId = TypeId<Entity>.Parse(_typeIdString);
         return typeId.ToString();
     }
 
     [Benchmark]
-    public string TypeSafeIdNotGeneric()
+    public string TypeSafeIdNotGenericParseToString()
     {
         var typeId = TypeId.Parse(_typeIdString);
         return typeId.ToString();
     }
 
     [Benchmark]
-    public string FastIds()
+    public string FastIdsParseToString()
     {
         var typeId = FastIDs.TypeId.TypeId.Parse(_typeIdString);
         return typeId.ToString();
     }
 
     [Benchmark]
-    public string FastIdsDecode()
+    public string FastIdsDecodeParseToString()
     {
         var typeId = FastIDs.TypeId.TypeId.Parse(_typeIdString);
         var decoded = typeId.Decode();
@@ -71,14 +71,14 @@ public class TypeIdRetrieveFlow
     }
 
     [Benchmark]
-    public string TcKsBenchmark()
+    public string TcKsBenchmarkParseToString()
     {
         var typeId = TcKs.TypeId.TypeId.Parse(_typeIdString);
         return typeId.ToString();
     }
 
     [Benchmark]
-    public string CbuctokBenchmark()
+    public string CbuctokBenchmarkParseToString()
     {
         var typeId = global::TypeId.TypeId.Parse(_typeIdString);
         return typeId.ToString();
