@@ -50,15 +50,15 @@ public readonly struct TypeId<TEntity>
     /// Initializes a new instance of the <see cref="TypeId{TEntity}"/> struct from an untyped TypeId.
     /// </summary>
     /// <param name="value">The TypeId value.</param>
-    /// <exception cref="ArgumentException">Thrown when the prefix doesn't match the entity type.</exception>
+    /// <exception cref="FormatException">Thrown when the prefix doesn't match the entity type.</exception>
     public TypeId(TypeId value)
     {
         if (value.Prefix != _prefix)
         {
-            throw new ArgumentException(
-                $"TypeId prefix must be '{_prefix}', got '{value.Prefix}'",
-                nameof(value)
-            );
+            ThrowPrefixFormatException(value.Prefix);
+
+            static void ThrowPrefixFormatException(string prefix) =>
+                throw new FormatException($"TypeId prefix must be '{_prefix}', got '{prefix}'");
         }
         _value = value;
     }
@@ -172,9 +172,17 @@ public readonly struct TypeId<TEntity>
             return 1;
         }
 
-        return obj is TypeId<TEntity> other
-            ? CompareTo(other)
-            : throw new ArgumentException($"Object must be of type {typeof(TypeId<TEntity>).Name}");
+        if (obj is not TypeId<TEntity> other)
+        {
+            ThrowArgumentException();
+
+            static void ThrowArgumentException() =>
+                throw new ArgumentException(
+                    $"Object must be of type {typeof(TypeId<TEntity>).Name}"
+                );
+        }
+
+        return CompareTo(other);
     }
 
     /// <inheritdoc/>
@@ -188,7 +196,7 @@ public readonly struct TypeId<TEntity>
     /// <summary>
     /// Explicitly converts an untyped TypeId to a strongly-typed TypeId.
     /// </summary>
-    /// <exception cref="ArgumentException">Thrown when the prefix doesn't match.</exception>
+    /// <exception cref="FormatException">Thrown when the prefix doesn't match.</exception>
     public static explicit operator TypeId<TEntity>(TypeId value) => new(value);
 
     /// <inheritdoc/>
@@ -217,9 +225,7 @@ public readonly struct TypeId<TEntity>
 
     /// <inheritdoc/>
     public static TypeId<TEntity> Parse(ReadOnlySpan<char> s, IFormatProvider? provider = null) =>
-        TryParse(s, provider, out var result)
-            ? result
-            : throw new FormatException($"Invalid TypeId<{typeof(TEntity).Name}> format: '{s}'");
+        TryParse(s, provider, out var result) ? result : ThrowTypeIdFormatException(s);
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId{TEntity})"/>
     public static bool TryParse(ReadOnlySpan<char> s, out TypeId<TEntity> result) =>
@@ -260,9 +266,7 @@ public readonly struct TypeId<TEntity>
 
     /// <inheritdoc/>
     public static TypeId<TEntity> Parse(string s, IFormatProvider? provider = null) =>
-        TryParse(s.AsSpan(), provider, out var result)
-            ? result
-            : throw new FormatException($"Invalid TypeId<{typeof(TEntity).Name}> format: '{s}'");
+        TryParse(s.AsSpan(), provider, out var result) ? result : ThrowTypeIdFormatException(s);
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId{TEntity})"/>
     public static bool TryParse([NotNullWhen(true)] string? s, out TypeId<TEntity> result) =>
@@ -282,9 +286,7 @@ public readonly struct TypeId<TEntity>
     ) =>
         TryParse(utf8Text, provider, out var result)
             ? result
-            : throw new FormatException(
-                $"Invalid TypeId<{typeof(TEntity).Name}> format: '{Encoding.UTF8.GetString(utf8Text)}'"
-            );
+            : ThrowTypeIdFormatException(Encoding.UTF8.GetString(utf8Text));
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{byte}, IFormatProvider?, out TypeId{TEntity})"/>
     public static bool TryParse(ReadOnlySpan<byte> utf8Text, out TypeId<TEntity> result) =>
@@ -313,4 +315,7 @@ public readonly struct TypeId<TEntity>
         result = new TypeId<TEntity>(typeId.Uuid);
         return true;
     }
+
+    private static TypeId<TEntity> ThrowTypeIdFormatException(string s) =>
+        throw new FormatException($"Invalid TypeId<{typeof(TEntity).Name}> format: '{s}'");
 }

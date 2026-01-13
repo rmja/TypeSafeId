@@ -67,7 +67,10 @@ public readonly struct TypeId
     {
         if (!skipValidation && !Parser.IsValidPrefix(prefix))
         {
-            throw new FormatException($"Invalid TypeId prefix: '{prefix}'");
+            ThrowPrefixFormatException(prefix);
+
+            static void ThrowPrefixFormatException(string prefix) =>
+                throw new FormatException($"Invalid TypeId prefix: '{prefix}'");
         }
 
         _prefix = prefix;
@@ -189,9 +192,15 @@ public readonly struct TypeId
             return 1;
         }
 
-        return obj is TypeId other
-            ? CompareTo(other)
-            : throw new ArgumentException($"Object must be of type {nameof(TypeId)}");
+        if (obj is not TypeId other)
+        {
+            ThrowArgumentException();
+
+            static void ThrowArgumentException() =>
+                throw new ArgumentException($"Object must be of type {nameof(TypeId)}");
+        }
+
+        return CompareTo(other);
     }
 
     /// <inheritdoc/>
@@ -217,9 +226,7 @@ public readonly struct TypeId
 
     /// <inheritdoc/>
     public static TypeId Parse(ReadOnlySpan<char> s, IFormatProvider? provider = null) =>
-        TryParse(s, provider, out var result)
-            ? result
-            : throw new FormatException($"Invalid TypeId format: '{s}'");
+        TryParse(s, provider, out var result) ? result : ThrowTypeIdFormatException(s.ToString());
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId)"/>
     public static bool TryParse(ReadOnlySpan<char> s, out TypeId result) =>
@@ -279,9 +286,7 @@ public readonly struct TypeId
 
     /// <inheritdoc cref="Parse(ReadOnlySpan{char}, IFormatProvider?)"/>
     public static TypeId Parse(string s, IFormatProvider? provider = null) =>
-        TryParse(s.AsSpan(), provider, out var result)
-            ? result
-            : throw new FormatException($"Invalid TypeId format: '{s}'");
+        TryParse(s.AsSpan(), provider, out var result) ? result : ThrowTypeIdFormatException(s);
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId)"/>
     public static bool TryParse(
@@ -300,9 +305,7 @@ public readonly struct TypeId
     public static TypeId Parse(ReadOnlySpan<byte> utf8Text, IFormatProvider? provider = null) =>
         TryParse(utf8Text, provider, out var result)
             ? result
-            : throw new FormatException(
-                $"Invalid TypeId format: '{Encoding.UTF8.GetString(utf8Text)}'"
-            );
+            : ThrowTypeIdFormatException(Encoding.UTF8.GetString(utf8Text));
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{byte}, IFormatProvider?, out TypeId)"/>
     public static bool TryParse(ReadOnlySpan<byte> utf8Text, out TypeId result) =>
@@ -332,6 +335,9 @@ public readonly struct TypeId
         Encoding.UTF8.GetChars(utf8Text, charBuffer);
         return TryParse(charBuffer, provider, out result);
     }
+
+    private static TypeId ThrowTypeIdFormatException(string s) =>
+        throw new FormatException($"Invalid TypeId format: '{s}'");
 
     internal static class Parser
     {
