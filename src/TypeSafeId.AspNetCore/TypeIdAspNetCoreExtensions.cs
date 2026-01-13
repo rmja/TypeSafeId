@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using TypeSafeId.AspNetCore;
 
-namespace TypeSafeId.AspNetCore;
+namespace TypeSafeId;
 
 /// <summary>
 /// Provides extension methods for configuring TypeId route constraint support in ASP.NET Core routing.
 /// </summary>
-public static class TypeIdExtensions
+public static class TypeIdAspNetCoreExtensions
 {
     /// <summary>
     /// Adds TypeId route constraint support.

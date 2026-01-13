@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TypeSafeId.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace TypeSafeId.EntityFrameworkCore;
+namespace TypeSafeId;
 
 /// <summary>
 /// Provides extension methods for configuring Entity Framework Core property builders to use TypeId value conversions.
 /// </summary>
-public static class TypeIdBuilderExtensions
+public static class TypeIdEntityFrameworkCoreBuilderExtensions
 {
     /// <summary>
     /// Configures the property to use a byte array conversion for the TypeId value when storing and retrieving data
