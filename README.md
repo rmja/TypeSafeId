@@ -193,10 +193,6 @@ This implementation is inspired by and builds upon:
 
 MIT License - See [LICENSE](LICENSE) file for details
 
-## Repository
-
-[https://github.com/rmja/TypeSafeId](https://github.com/rmja/TypeSafeId)
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
