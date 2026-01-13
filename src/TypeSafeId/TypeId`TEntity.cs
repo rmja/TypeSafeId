@@ -225,7 +225,7 @@ public readonly struct TypeId<TEntity>
 
     /// <inheritdoc/>
     public static TypeId<TEntity> Parse(ReadOnlySpan<char> s, IFormatProvider? provider = null) =>
-        TryParse(s, provider, out var result) ? result : ThrowTypeIdFormatException(s);
+        TryParse(s, provider, out var result) ? result : ThrowTypeIdFormatException(s.ToString());
 
     /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId{TEntity})"/>
     public static bool TryParse(ReadOnlySpan<char> s, out TypeId<TEntity> result) =>
