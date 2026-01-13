@@ -84,6 +84,5 @@ public class TypeIdRetrieveFlow
         return typeId.ToString();
     }
 
-    [TypeId("prefix")]
     public record Entity();
 }

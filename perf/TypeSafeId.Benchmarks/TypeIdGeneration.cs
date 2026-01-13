@@ -72,6 +72,5 @@ public class TypeIdGeneration
         return global::TypeId.TypeId.NewTypeId(_prefix);
     }
 
-    [TypeId("prefix")]
     public record Entity();
 }

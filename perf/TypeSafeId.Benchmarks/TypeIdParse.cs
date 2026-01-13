@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Text;
+﻿using System.Text;
 using BenchmarkDotNet.Attributes;
 
 namespace TypeSafeId.Benchmarks;
@@ -108,6 +107,5 @@ public class TypeIdParse
         return typeId;
     }
 
-    [TypeId("prefix")]
     public record Entity();
 }

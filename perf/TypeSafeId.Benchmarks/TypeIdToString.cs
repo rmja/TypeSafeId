@@ -88,6 +88,5 @@ public class TypeIdToString
         return _cbuctokTypeId.ToString();
     }
 
-    [TypeId("prefix")]
     public record Entity();
 }
