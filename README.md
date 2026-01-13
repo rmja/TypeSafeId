@@ -1,6 +1,6 @@
 # TypeSafeId
 
-A modern, type-safe implementation of [TypeIDs](https://github.com/jetify-com/typeid) for .NET. TypeIds are globally unique, K-sortable identifiers that combine a human-readable prefix with a UUIDv7 encoded in Crockford Base32.
+A modern, type-safe implementation of [TypeID](https://github.com/jetify-com/typeid) version 0.3 for .NET. TypeIds are globally unique, K-sortable identifiers that combine a human-readable prefix with a UUIDv7 encoded in Crockford Base32.
 
 Here's an example of a TypeID of type user:
 ```
@@ -9,7 +9,7 @@ Here's an example of a TypeID of type user:
   type    uuid suffix (base32)
 ```
 
-It's corresponding type-safe id type is `TypeId<User>`.
+It's corresponding type-safe id type could be `TypeId<User>`.
 
 ## Features
 
