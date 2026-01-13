@@ -22,6 +22,11 @@ public static class TypeIdBuilderExtensions
         this PropertyBuilder<TypeId<TEntity>> builder
     ) => builder.HasConversion(new TypeIdToBytesConverter<TEntity>());
 
+    /// <inheritdoc cref="HasTypeIdToBytesConversion{TEntity}(PropertyBuilder{TypeId{TEntity}})"/>
+    public static PropertyBuilder<TypeId<TEntity>?> HasTypeIdToBytesConversion<TEntity>(
+        this PropertyBuilder<TypeId<TEntity>?> builder
+    ) => builder.HasConversion(new TypeIdToBytesConverter<TEntity>());
+
     /// <summary>
     /// Configures the property to use a string conversion for the TypeId value when storing and retrieving data from
     /// the database.
@@ -36,6 +41,11 @@ public static class TypeIdBuilderExtensions
         this PropertyBuilder<TypeId<TEntity>> builder
     ) => builder.HasConversion(new TypeIdToStringConverter<TEntity>());
 
+    /// <inheritdoc cref="HasTypeIdToStringConversion{TEntity}(PropertyBuilder{TypeId{TEntity}})"/>
+    public static PropertyBuilder<TypeId<TEntity>?> HasTypeIdToStringConversion<TEntity>(
+        this PropertyBuilder<TypeId<TEntity>?> builder
+    ) => builder.HasConversion(new TypeIdToStringConverter<TEntity>());
+
     /// <summary>
     /// Configures the property to use a string-based conversion for the TypeId type when storing values in the
     /// database.
@@ -47,5 +57,10 @@ public static class TypeIdBuilderExtensions
     /// <returns>The same PropertyBuilder instance so that additional configuration calls can be chained.</returns>
     public static PropertyBuilder<TypeId> HasTypeIdToStringConversion(
         this PropertyBuilder<TypeId> builder
+    ) => builder.HasConversion(new TypeIdToStringConverter());
+
+    /// <inheritdoc cref="HasTypeIdToStringConversion(PropertyBuilder{TypeId})"/>
+    public static PropertyBuilder<TypeId?> HasTypeIdToStringConversion(
+        this PropertyBuilder<TypeId?> builder
     ) => builder.HasConversion(new TypeIdToStringConverter());
 }
