@@ -13,7 +13,7 @@ public sealed class TypeIdAttribute : Attribute
     /// <summary>
     /// Gets the TypeId prefix for this entity type.
     /// </summary>
-    public string? Prefix { get; }
+    public string? Prefix { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="TypeIdAttribute"/> class.

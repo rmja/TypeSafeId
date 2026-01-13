@@ -107,7 +107,10 @@ public readonly struct TypeId<TEntity>
     /// </summary>
     public int CopyTo(Span<char> buffer) => _value.CopyTo(buffer);
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Returns the string representation of this TypeId in the format [prefix_]&lt;base32-uuid&gt;.
+    /// </summary>
+    /// <returns>A string representation of this TypeId.</returns>
     public override string ToString() => _value.ToString();
 
     /// <inheritdoc/>
@@ -147,7 +150,7 @@ public readonly struct TypeId<TEntity>
     }
 
     /// <inheritdoc/>
-    public override int GetHashCode() => _value.GetHashCode();
+    public override int GetHashCode() => _value.Uuid.GetHashCode();
 
     /// <summary>
     /// Implicitly converts a strongly-typed TypeId to an untyped TypeId.
@@ -190,6 +193,10 @@ public readonly struct TypeId<TEntity>
             ? result
             : throw new FormatException($"Invalid TypeId<{typeof(TEntity).Name}> format: '{s}'");
 
+    /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId{TEntity})"/>
+    public static bool TryParse(ReadOnlySpan<char> s, out TypeId<TEntity> result) =>
+        TryParse(s, null, out result);
+
     /// <inheritdoc/>
     public static bool TryParse(
         ReadOnlySpan<char> s,
@@ -214,10 +221,14 @@ public readonly struct TypeId<TEntity>
     }
 
     /// <inheritdoc/>
-    public static TypeId<TEntity> Parse(string s, IFormatProvider? provider) =>
+    public static TypeId<TEntity> Parse(string s, IFormatProvider? provider = null) =>
         TryParse(s.AsSpan(), provider, out var result)
             ? result
             : throw new FormatException($"Invalid TypeId<{typeof(TEntity).Name}> format: '{s}'");
+
+    /// <inheritdoc cref="TryParse(ReadOnlySpan{char}, IFormatProvider?, out TypeId{TEntity})"/>
+    public static bool TryParse([NotNullWhen(true)] string? s, out TypeId<TEntity> result) =>
+        TryParse(s.AsSpan(), null, out result);
 
     /// <inheritdoc/>
     public static bool TryParse(
@@ -236,6 +247,10 @@ public readonly struct TypeId<TEntity>
             : throw new FormatException(
                 $"Invalid TypeId<{typeof(TEntity).Name}> format: '{Encoding.UTF8.GetString(utf8Text)}'"
             );
+
+    /// <inheritdoc cref="TryParse(ReadOnlySpan{byte}, IFormatProvider?, out TypeId{TEntity})"/>
+    public static bool TryParse(ReadOnlySpan<byte> utf8Text, out TypeId<TEntity> result) =>
+        TryParse(utf8Text, null, out result);
 
     /// <inheritdoc/>
     public static bool TryParse(
