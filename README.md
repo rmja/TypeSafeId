@@ -2,6 +2,15 @@
 
 A modern, type-safe implementation of [TypeIDs](https://github.com/jetify-com/typeid) for .NET. TypeIds are globally unique, K-sortable identifiers that combine a human-readable prefix with a UUIDv7 encoded in Crockford Base32.
 
+Here's an example of a TypeID of type user:
+```
+  user_01h455vb4pex5vsknk084sn02q
+  └──┘ └────────────────────────┘
+  type    uuid suffix (base32)
+```
+
+It's corresponding type-safe id type is `TypeId<User>`.
+
 ## Features
 
 - ✨ **Type-safe** - Generic `TypeId<TEntity>` provides compile-time safety
@@ -26,20 +35,9 @@ dotnet add package TypeSafeId.EntityFrameworkCore
 
 ## Quick Start
 
-### Basic Usage
-
-```csharp
-using TypeSafeId;
-
-// Create a TypeId with a prefix
-var userId = TypeId.Create("user");
-Console.WriteLine(userId); // user_01h455vb4pex5vsknk084sn02q
-
-// Parse from string
-var parsed = TypeId.Parse("user_01h455vb4pex5vsknk084sn02q");
-```
-
 ### Strongly-Typed TypeIds
+
+This is the preferred id type. Use it when you know the type of id in advance.
 
 ```csharp
 // Define your entity types
@@ -62,6 +60,22 @@ var product = new Product(
 );
 Console.WriteLine(product.Id); // prd_01h455vb4pex5vsknk084sn02q
 ```
+
+### Non-Typed Usage
+
+Use non-typed `TypeId` if you do not know the type of id.
+
+```csharp
+using TypeSafeId;
+
+// Create a TypeId with a prefix
+var userId = TypeId.Create("user");
+Console.WriteLine(userId); // user_01h455vb4pex5vsknk084sn02q
+
+// Parse from string
+var parsed = TypeId.Parse("user_01h455vb4pex5vsknk084sn02q");
+```
+
 
 ## ASP.NET Core Integration
 
