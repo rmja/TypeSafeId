@@ -17,14 +17,15 @@ public readonly struct TypeId<TEntity>
         IComparable<TypeId<TEntity>>,
         IComparable
 {
+    private static string _prefix = GetPrefixFromAttribute();
     private readonly TypeId _value;
 
     /// <summary>
     /// Gets the prefix string defined by the associated attribute.
     /// </summary>
     /// <remarks>The value is determined at runtime by evaluating the attribute applied to the containing type
-    /// or member. This field is read-only.</remarks>
-    public static readonly string Prefix = GetPrefixFromAttribute();
+    /// or member.</remarks>
+    public static string Prefix => _prefix;
 
     /// <summary>
     /// Gets the underlying TypeId value.
@@ -47,7 +48,7 @@ public readonly struct TypeId<TEntity>
     /// <param name="uuid">The UUID component.</param>
     public TypeId(Guid uuid)
     {
-        _value = new TypeId(Prefix, uuid);
+        _value = new TypeId(_prefix, uuid);
     }
 
     /// <summary>
@@ -57,10 +58,10 @@ public readonly struct TypeId<TEntity>
     /// <exception cref="ArgumentException">Thrown when the prefix doesn't match the entity type.</exception>
     public TypeId(TypeId value)
     {
-        if (value.Prefix != Prefix)
+        if (value.Prefix != _prefix)
         {
             throw new ArgumentException(
-                $"TypeId prefix must be '{Prefix}', got '{value.Prefix}'",
+                $"TypeId prefix must be '{_prefix}', got '{value.Prefix}'",
                 nameof(value)
             );
         }
@@ -73,14 +74,28 @@ public readonly struct TypeId<TEntity>
     /// <param name="timestamp">Optional timestamp to use. Defaults to current UTC time.</param>
     /// <returns>A new TypeId instance.</returns>
     public static TypeId<TEntity> Create(DateTimeOffset? timestamp = null) =>
-        new(TypeId.Create(Prefix, timestamp));
+        new(TypeId.Create(_prefix, timestamp));
+
+    /// <summary>
+    /// Sets the internal prefix used for type identifier parsing. Intended for testing and benchmarking scenarios only.
+    /// </summary>
+    /// <remarks>This method should not be used in production code. It is provided solely for
+    /// testing and benchmarking purposes. Changing the prefix may affect how type identifiers are parsed and
+    /// recognized.</remarks>
+    /// <param name="prefix">The prefix string to use for type identifier parsing.</param>
+    [Obsolete("For testing and benchmarking purposes only.")]
+    public static void SetPrefix(string prefix)
+    {
+        TypeId.Parser.ValidatePrefix(prefix);
+        _prefix = prefix;
+    }
 
     private static string GetPrefixFromAttribute()
     {
         var attribute = typeof(TEntity).GetCustomAttribute<TypeIdAttribute>();
         var prefix = attribute?.Prefix;
 
-        // If no attribute or empty prefix, use the type name as default
+        // If no attribute or null prefix, use the type name as default
         prefix ??= JsonNamingPolicy.SnakeCaseLower.ConvertName(typeof(TEntity).Name);
 
         var error = TypeId.Parser.ValidatePrefix(prefix);
@@ -204,20 +219,30 @@ public readonly struct TypeId<TEntity>
         out TypeId<TEntity> result
     )
     {
-        if (!TypeId.TryParse(s, provider, out var typeId))
+        if (_prefix.Length > 0 && s.Length == _prefix.Length + 1 + TypeIdConstants.IdLength)
         {
-            result = default;
-            return false;
+            var separatorIndex = _prefix.Length;
+            if (
+                s[..separatorIndex].SequenceEqual(_prefix)
+                && s[separatorIndex] == '_'
+                && UuidBase32.TryDecode(s[(separatorIndex + 1)..], out var uuid)
+            )
+            {
+                result = new TypeId<TEntity>(uuid);
+                return true;
+            }
+        }
+        else if (_prefix.Length == 0 && s.Length == TypeIdConstants.IdLength)
+        {
+            if (UuidBase32.TryDecode(s, out var uuid))
+            {
+                result = new TypeId<TEntity>(uuid);
+                return true;
+            }
         }
 
-        if (typeId.Prefix != Prefix)
-        {
-            result = default;
-            return false;
-        }
-
-        result = new TypeId<TEntity>(typeId);
-        return true;
+        result = default;
+        return false;
     }
 
     /// <inheritdoc/>
@@ -265,7 +290,7 @@ public readonly struct TypeId<TEntity>
             return false;
         }
 
-        if (typeId.Prefix != Prefix)
+        if (typeId.Prefix != _prefix)
         {
             result = default;
             return false;

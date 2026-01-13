@@ -117,17 +117,17 @@ public readonly struct TypeId
     public override string ToString()
     {
         var written = 0;
-        Span<char> buffer = stackalloc char[TypeIdConstants.MaxLength];
+        Span<char> chars = stackalloc char[Length];
 
         if (Prefix.Length > 0)
         {
-            Prefix.AsSpan().CopyTo(buffer);
-            buffer[Prefix.Length] = '_';
+            Prefix.AsSpan().CopyTo(chars);
+            chars[Prefix.Length] = '_';
             written += Prefix.Length + 1;
         }
 
-        written += UuidBase32.Encode(Uuid, buffer[written..]);
-        return new string(buffer[..written]);
+        UuidBase32.Encode(Uuid, chars[written..]);
+        return new string(chars);
     }
 
     /// <inheritdoc/>
